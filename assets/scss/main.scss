@@ -1,0 +1,36 @@
+
+body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    height: 30rem;
+    width: 30rem;
+    display: grid;
+    grid-template-areas:
+        "topL topC topR"
+        "midL midC midR"
+        "botL botC botR";
+    
+    &:first-child {
+        border: solid blue 1px;
+    }
+}
+
+.board__topL,
+.board__topC,
+.board__topR,
+.board__midL,
+.board__midC,
+.board__midR,
+.board__botL,
+.board__botC,
+.board__botR{
+    grid-area: "topL";
+    height: 100%;
+    width: 100%;
+    border: solid red 1px;
+}
