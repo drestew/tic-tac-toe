@@ -1,17 +1,28 @@
 const gameBoard = (() => {
     // const board = ['topL', 'topC', 'topR', 'midL', 'midC', 'midR', 'botL', 'botC', 'botR']
 
-    const topL = document.querySelector('.board__topL')
-    const topC = document.querySelector('.board__topC')
-    const topR = document.querySelector('.board__topR')
-    const midL = document.querySelector('.board__midL')
-    const midC = document.querySelector('.board__midC')
-    const midR = document.querySelector('.board__midR')
-    const botL = document.querySelector('.board__botL')
-    const botC = document.querySelector('.board__botC')
-    const botR = document.querySelector('.board__botR')
+    const topL = { el: document.querySelector('.board__topL'), value: false }
+    const topC = { el: document.querySelector('.board__topC'), value: false }
+    const topR = { el: document.querySelector('.board__topR'), value: false }
+    const midL = { el: document.querySelector('.board__midL'), value: false }
+    const midC = { el: document.querySelector('.board__midC'), value: false }
+    const midR = { el: document.querySelector('.board__midR'), value: false }
+    const botL = { el: document.querySelector('.board__botL'), value: false }
+    const botC = { el: document.querySelector('.board__botC'), value: false }
+    const botR = { el: document.querySelector('.board__botR'), value: false }
 
     const board = [topL, topC, topR, midL, midC, midR, botL, botC, botR]
+
+    const winMap = new Map()
+    winMap.set(topL, [[topC, topR], [midL, botL], [midC, botR]])
+    winMap.set(topC, [[topL, topR], [midC, botC]])
+    winMap.set(topR, [[topL, topC], [midC, botL], [midR, botR]])
+    winMap.set(midL, [[topL, botL], [midC, midR]])
+    winMap.set(midC, [[topL, botR], [topC, botC], [topR, botL], [midL, midR]])
+    winMap.set(midR, [[topR, botR], [midL, midC], [topR, botR]])
+    winMap.set(botL, [[topL, midL], [topR, midC], [botC, botR]])
+    winMap.set(botC, [[botL, botR], [topC, midC]])
+    winMap.set(botR, [[topL, midC], [topR, midR], [botL, botC]])
 
     return {
         board,
@@ -23,14 +34,16 @@ const gameBoard = (() => {
         midR,
         botL,
         botC,
-        botR
+        botR,
+        winMap
     }
 })()
 
 const playGame = () => {
     gameBoard.board.forEach(square => {
-        square.addEventListener('click', function () {
+        square.el.addEventListener('click', function () {
             this.textContent = "X"
+            square.value = true
             computerPlay()
         })
     });
@@ -39,13 +52,13 @@ const playGame = () => {
 const computerPlay = () => {
     const emptySquares = []
     gameBoard.board.forEach(square => {
-        if (square.textContent === "") {
+        if (square.el.textContent === "") {
             emptySquares.push(square)
         }
     })
     const selection = Math.floor(Math.random() * emptySquares.length)
     console.log(selection, emptySquares)
-    gameBoard.board[selection].textContent = "O"
+    gameBoard.board[selection].el.textContent = "O"
 }
 
 playGame()
