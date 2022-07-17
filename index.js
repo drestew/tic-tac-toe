@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-    const board = ['topL', 'topC', 'topR', 'midL', 'midC', 'midR', 'botL', 'botC', 'botR']
+    // const board = ['topL', 'topC', 'topR', 'midL', 'midC', 'midR', 'botL', 'botC', 'botR']
 
     const topL = document.querySelector('.board__topL')
     const topC = document.querySelector('.board__topC')
@@ -10,6 +10,8 @@ const gameBoard = (() => {
     const botL = document.querySelector('.board__botL')
     const botC = document.querySelector('.board__botC')
     const botR = document.querySelector('.board__botR')
+
+    const board = [topL, topC, topR, midL, midC, midR, botL, botC, botR]
 
     return {
         board,
@@ -25,12 +27,25 @@ const gameBoard = (() => {
     }
 })()
 
-const selectSquare = function () {
-    gameBoard.topL.textContent = "X"
+const playGame = () => {
+    gameBoard.board.forEach(square => {
+        square.addEventListener('click', function () {
+            this.textContent = "X"
+            computerPlay()
+        })
+    });
 }
 
-const playGame = () => {
-    gameBoard.topL.addEventListener('click', selectSquare)
+const computerPlay = () => {
+    const emptySquares = []
+    gameBoard.board.forEach(square => {
+        if (square.textContent === "") {
+            emptySquares.push(square)
+        }
+    })
+    const selection = Math.floor(Math.random() * emptySquares.length)
+    console.log(selection, emptySquares)
+    gameBoard.board[selection].textContent = "O"
 }
 
 playGame()
