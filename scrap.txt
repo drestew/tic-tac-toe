@@ -1,0 +1,15 @@
+// build gameboard with module pattern
+// put game squares into an array
+// each array item is an object with DOM square as the key...
+// ...and the current value of the square (eg. "", pl1, pl2)
+// set variables for each of the squares in the DOM
+// create a Map for winning combinations
+
+// put players into a factory function
+// set X for user and O for computer
+
+// put gameplay into a factory function
+// user clicks a square and it places an X
+// computer places an O in a random other square
+
+
